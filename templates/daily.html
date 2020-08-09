@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <table class="table table-bordered">
+     <div class="clearfix">
+        <a class="btn btn-info left" href="{% url 'calendar' %}"> Get back to Calendar </a>
+    </div>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Time of receipt</th>
+      <th>Full information</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for events in object_list %}
+      <tr>
+        <td>{{ events.patient.name }}</td>
+        <td>{{ events.start_time.hour }}.{{ events.start_time.hour }} - {{ events.end_time.hour }}.{{ events.start_time.hour }}</td>
+        <td><a  href="{% url 'edit' events.id %}"> Full info about {{ events.patient.name }} </a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
