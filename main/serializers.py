@@ -51,6 +51,24 @@ class DoctorSerializer(serializers.ModelSerializer):
     # end_time = models.DateTimeField()
 
 
+class GetEventsSerializer(serializers.ModelSerializer):
+
+    doctor = serializers.SlugRelatedField(write_only=False, slug_field='pk', queryset = models.Doctor.objects.all())
+
+    class Meta:
+        model = models.Event
+        fields = ("doctor", "title", "description", "start_time", "end_time")
+
+
+class UsersEventsSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = models.Event
+        fields = ("title", "description", "start_time", "end_time", "user")
+
+
+
 class CreateEventSerializer(serializers.ModelSerializer):
     doctor = serializers.SlugRelatedField(write_only=True, slug_field='pk', queryset = models.Doctor.objects.all())
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
@@ -64,6 +82,5 @@ class CreateEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Event
         fields = ("user","doctor", "title", "description", "start_time", "end_time")
-
 
 

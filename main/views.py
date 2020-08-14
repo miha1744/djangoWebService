@@ -47,7 +47,38 @@ class GetAllPatients(ListAPIView):
 
 class GetAllEvents(ListAPIView):
     queryset = Event.objects.all()
-    serializer_class = serializers.CreateEventSerializer
+    serializer_class = serializers.GetEventsSerializer
+
+
+
+class UsersEvents(APIView):
+
+    # def get_object(self, pk):
+    #     try:
+    #         return Event.objects.filter(doctor_id= pk)
+    #     except Event.DoesNotExist:
+    #         raise Http404
+
+
+    def get(self, request):
+        event = Event.objects.filter(patient__user=self.request.user)
+        serializer = serializers.UsersEventsSerializer(event, many= True)
+        return Response(serializer.data)
+
+
+
+class GetEvent(APIView):
+
+    def get_object(self, pk):
+        try:
+            return Event.objects.filter(doctor_id= pk)
+        except Event.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        event = self.get_object(pk)
+        serializer = serializers.GetEventsSerializer(event, many= True)
+        return Response(serializer.data)
 
 
 class CreateEventAPIView(CreateAPIView):
@@ -117,7 +148,6 @@ def event(request, event_id=None):
 class DailySheldue(LoginRequiredMixin ,generic.ListView):
     model = Event
     template_name = 'daily.html'
-
 
 
     def get_queryset(self):

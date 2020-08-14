@@ -14,7 +14,10 @@ api_urls = [
     path("api/v1/doctors-list", views.GetDoctorsListAPIView.as_view(), name="doctors"),
     path("api/v1/events-list", views.GetAllEvents.as_view(), name="events"),
     path("api/v1/register-event", views.CreateEventAPIView.as_view(), name= "register-event"),
-    path("api/v1/patients-list", views.GetAllPatients.as_view(), name ="patients-list")
+    path("api/v1/patients-list", views.GetAllPatients.as_view(), name ="patients-list"),
+    path("api/v1/events/<int:pk>", views.GetEvent.as_view(), name = "doctors_events"),
+    path("api/v1/current_user_events", views.UsersEvents.as_view(), name = "current_user_events"),
+
 ]
 
 

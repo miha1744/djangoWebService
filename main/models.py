@@ -5,6 +5,9 @@ from django.urls import reverse
 # Create your models here.
 
 
+
+
+
 class Doctor(models.Model):
     # relationships
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -13,6 +16,8 @@ class Doctor(models.Model):
     name = models.CharField(max_length=50, help_text="Name of a doctor")
 
     profession = models.CharField(max_length=50, help_text="Profession of a doctor")
+
+    picture = models.ImageField(upload_to='images/',help_text="Picture of a doctor")
 
     def __str__(self):
         return f"{self.pk}. {self.name}"
@@ -26,10 +31,6 @@ class Patient(models.Model):
 
     def __str__(self):
         return f"{self.name}"
-
-
-
-
 
 
 
@@ -54,3 +55,6 @@ class Event(models.Model):
     def get_daily_url(self):
         url = reverse('daily', args=(self.start_time.day, self.start_time.month))
         return url
+
+
+
