@@ -17,8 +17,6 @@ class Doctor(models.Model):
 
     profession = models.CharField(max_length=50, help_text="Profession of a doctor")
 
-    picture = models.ImageField(upload_to='images/',help_text="Picture of a doctor")
-
     def __str__(self):
         return f"{self.pk}. {self.name}"
 
