@@ -11,7 +11,7 @@ djangorestframework = "*"
 django-crispy-forms = "*"
 gunicorn = "*"
 django-heroku = "*"
-
+Pillow = "*"
 
 [requires]
 python_version = "3.6"
