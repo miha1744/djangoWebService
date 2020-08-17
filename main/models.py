@@ -33,6 +33,12 @@ class Patient(models.Model):
         return f"{self.name}"
 
 
+class Service(models.Model):
+    title = models.CharField(max_length=50)
+    description = models.CharField(max_length=600)
+
+
+
 
 class Event(models.Model):
     patient = models.ForeignKey(Patient, on_delete = models.CASCADE, blank=True, related_name='patient')

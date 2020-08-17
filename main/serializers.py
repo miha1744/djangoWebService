@@ -69,6 +69,11 @@ class UsersEventsSerializer(serializers.ModelSerializer):
         fields = ("title", "description", "start_time", "user")
 
 
+class ServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Service
+        fields = ("title", "description")
+
 
 class CreateEventSerializer(serializers.ModelSerializer):
     doctor = serializers.SlugRelatedField(write_only=True, slug_field='pk', queryset = models.Doctor.objects.all())

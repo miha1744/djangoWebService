@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import ListView, DeleteView
 from django.urls import reverse_lazy
 from datetime import datetime, timedelta
-from .models import Event, Patient, Doctor
+from .models import Event, Patient, Doctor, Service
 from .utils import Calendar
 from django.http import HttpResponse
 from django.views import generic
@@ -93,6 +93,10 @@ class CreateDoctorView(CreateView):
     template_name = "register.html"
 
 
+
+class GetAllServices(ListAPIView):
+    queryset = Service.objects.all()
+    serializer_class = serializers.ServiceSerializer
 
 
 
