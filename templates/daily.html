@@ -16,7 +16,7 @@
     {% for events in object_list %}
       <tr>
         <td>{{ events.patient.name }}</td>
-        <td>{{ events.start_time.hour }}.{{ events.start_time.hour }} - {{ events.end_time.hour }}.{{ events.start_time.hour }}</td>
+        <td>{{ events.start_time.hour }}.{{ events.start_time.minute }}</td>
         <td><a  href="{% url 'edit' events.id %}"> Full info about {{ events.patient.name }} </a></td>
       </tr>
     {% endfor %}

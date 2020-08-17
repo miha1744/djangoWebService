@@ -39,9 +39,10 @@ class PatientSerializer(serializers.ModelSerializer):
 
 
 class DoctorSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = models.Doctor
-        fields = ("pk", "name", "profession")
+        fields = ("pk", "name", "profession", "image")
 
 
     # doctor = models.ForeignKey(Doctor, on_delete = models.CASCADE, blank=True)
@@ -57,7 +58,7 @@ class GetEventsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Event
-        fields = ("doctor", "title", "description", "start_time", "end_time")
+        fields = ("doctor", "title", "description", "start_time")
 
 
 class UsersEventsSerializer(serializers.ModelSerializer):
@@ -65,7 +66,7 @@ class UsersEventsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Event
-        fields = ("title", "description", "start_time", "end_time", "user")
+        fields = ("title", "description", "start_time", "user")
 
 
 
@@ -81,6 +82,6 @@ class CreateEventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Event
-        fields = ("user","doctor", "title", "description", "start_time", "end_time")
+        fields = ("user","doctor", "title", "description", "start_time")
 
 

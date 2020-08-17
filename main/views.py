@@ -59,7 +59,6 @@ class UsersEvents(APIView):
     #     except Event.DoesNotExist:
     #         raise Http404
 
-
     def get(self, request):
         event = Event.objects.filter(patient__user=self.request.user)
         serializer = serializers.UsersEventsSerializer(event, many= True)
@@ -86,10 +85,30 @@ class CreateEventAPIView(CreateAPIView):
     serializer_class = serializers.CreateEventSerializer
 
 
+
+
 class CreateDoctorView(CreateView):
     form_class = forms.DoctorRegisterForm
     success_url = reverse_lazy("login")
     template_name = "register.html"
+
+
+
+
+
+def accountSettings(request):
+	doctor = request.user.doctor
+	form = forms.DoctorEditForm(instance=doctor)
+
+	if request.method == 'POST':
+		form = forms.DoctorEditForm(request.POST, request.FILES,instance=doctor )
+		if form.is_valid():
+			form.save()
+	context = {'form':form}
+	return render(request, 'account_settings.html', context)
+
+
+
 
 #Calendar
 class CalendarView(LoginRequiredMixin ,generic.ListView):

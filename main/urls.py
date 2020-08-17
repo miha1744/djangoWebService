@@ -1,6 +1,9 @@
 from django.urls import path, include
 from django.views.generic import RedirectView, TemplateView
 from django.urls import reverse
+from django.conf import settings
+from rest_framework import  routers
+from django.conf.urls.static import static
 
 
 from rest_framework.authtoken import views as auth_views
@@ -29,7 +32,10 @@ web_urls = [
     path('calendar/new', views.event, name='event_new'),
     path('event/edit/<int:event_id>', views.event, name='edit'),
     path('daily/<int:day>/<int:month>',views.DailySheldue.as_view(), name ='daily'),
+    path('account/', views.accountSettings, name="account"),
 ]
 
 
 urlpatterns = web_urls + api_urls
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

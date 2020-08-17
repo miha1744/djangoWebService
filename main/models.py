@@ -17,6 +17,8 @@ class Doctor(models.Model):
 
     profession = models.CharField(max_length=50, help_text="Profession of a doctor")
 
+    image = models.ImageField(default= "NoneImage.jpg",null=True, blank=True)
+
     def __str__(self):
         return f"{self.pk}. {self.name}"
 
@@ -38,7 +40,6 @@ class Event(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
 
     def __str__(self):
         return str(self.id)
