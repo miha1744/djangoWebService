@@ -100,6 +100,16 @@ class GetAllServices(ListAPIView):
 
 
 
+class GetStudents(APIView):
+
+    def get(self, request):
+        patient = Patient.objects.get(user=self.request.user)
+        serializer = serializers.PatientSerializer(patient, many= False)
+        return Response(serializer.data)
+
+
+
+
 def accountSettings(request):
 	doctor = request.user.doctor
 	form = forms.DoctorEditForm(instance=doctor)

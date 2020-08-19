@@ -69,6 +69,8 @@ class UsersEventsSerializer(serializers.ModelSerializer):
         fields = ("title", "description", "start_time", "user")
 
 
+
+
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Service
