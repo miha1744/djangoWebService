@@ -100,7 +100,7 @@ class GetAllServices(ListAPIView):
 
 
 
-class GetStudents(APIView):
+class GetPatients(APIView):
 
     def get(self, request):
         patient = Patient.objects.get(user=self.request.user)

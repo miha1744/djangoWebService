@@ -63,10 +63,11 @@ class GetEventsSerializer(serializers.ModelSerializer):
 
 class UsersEventsSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    doctor = serializers.SlugRelatedField(read_only=True, slug_field='name')
 
     class Meta:
         model = models.Event
-        fields = ("title", "description", "start_time", "user")
+        fields = ("title", "description", "start_time","doctor", "user")
 
 
 
