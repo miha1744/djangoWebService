@@ -110,8 +110,8 @@ class GetPatients(APIView):
 
 
 
-def accountSettings(request):
-	doctor = request.user.doctor
+def accountSettings(self, request):
+	doctor = Doctor.objects.get(user=self.request.user)
 	form = forms.DoctorEditForm(instance=doctor)
 
 	if request.method == 'POST':
