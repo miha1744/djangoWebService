@@ -5,15 +5,29 @@ Event
 {% endblock %}
 
 {% block content %}
-<div class="clearfix">
-  <a class="btn btn-info left" href="{% url 'calendar' %}"> Calendar </a>
-</div>
 
-<form method="post">
-  {% csrf_token %}
-  <table class="form form-table">
-    {{ form | crispy }}
-    <tr><td colspan="2"><button type="submit" class="btn btn-info right"> Submit </button></td></tr>
-  </table>
-</form>
+
+
+
+
+<div class="row">
+	<div class="col-md-3">
+		<div class="card card-body">
+			<a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Back to Calendar</a>
+			<hr>
+			<h3 style="text-align: center"> {{ event.patient.name }} medical record</h3>
+
+		</div>
+	</div>
+
+<div class="w-75 p-3">
+<div class="list-group">
+  <button type="button" class="list-group-item list-group-item-action active">
+    {{ event.start_time }}
+  </button>
+  <button type="button" class="list-group-item list-group-item-action">{{ event.title }}</button>
+  <button type="button" class="list-group-item list-group-item-action">{{ event.description }}</button>
+
+</div>
+</div>
 {% endblock %}
