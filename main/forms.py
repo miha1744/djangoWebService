@@ -33,6 +33,9 @@ class EventForm(ModelForm):
     class Meta:
         model = Event
         # datetime-local is a HTML5 input type, format to make date time show on fields
+        widgets = {
+          'start_time': DateInput(attrs={'type': 'datetime-local'}, format='%d/%m/%y %H:%M'),
+        }
         fields = '__all__'
 
 

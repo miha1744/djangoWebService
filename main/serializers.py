@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from django.forms import ModelForm, EmailField, CharField, DateInput
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
@@ -89,6 +89,9 @@ class CreateEventSerializer(serializers.ModelSerializer):
         return models.Event.objects.create(patient = patient, **validated_data)
 
     class Meta:
+        widgets = {
+          'start_time': DateInput(attrs={'type': 'datetime-local'}, format='%d/%m/%y %H:%M'),
+        }
         model = models.Event
         fields = ("user","doctor", "title", "description", "start_time")
 
