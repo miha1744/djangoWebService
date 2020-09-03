@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import ListView, DeleteView
 from django.urls import reverse_lazy
 from datetime import datetime, timedelta
-from .models import Event, Patient, Doctor, Service
+from .models import Event, Patient, Doctor, Service, Coordinates
 from .utils import Calendar
 from django.http import HttpResponse
 from django.views import generic
@@ -123,6 +123,13 @@ def accountSettings(request):
 
 
 
+
+
+class GetCoordinates(APIView):
+    def get(self, request):
+        coordinate = Coordinates.objects.first()
+        serializer = serializers.CoordinateSerializer(coordinate, many= False)
+        return Response(serializer.data)
 
 #Calendar
 class CalendarView(LoginRequiredMixin ,generic.ListView):

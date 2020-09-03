@@ -37,7 +37,16 @@ class Service(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=600)
 
+class Coordinates(models.Model):
+    latitude = models.DecimalField(max_digits=15, decimal_places=10)
+    longitude = models.DecimalField(max_digits=15, decimal_places=10)
 
+    def save(self, *args, **kwargs):
+        if not self.pk and Coordinates.objects.exists():
+        # if you'll not check for self.pk
+        # then error will also raised in update of exists model
+            raise ValidationError('There is can be only one Coordinates instance')
+        return super(Coordinates, self).save(*args, **kwargs)
 
 
 class Event(models.Model):

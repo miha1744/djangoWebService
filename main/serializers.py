@@ -70,6 +70,12 @@ class UsersEventsSerializer(serializers.ModelSerializer):
         fields = ("title", "description", "start_time","doctor", "user")
 
 
+class CoordinateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Coordinates
+        fields = ("latitude", "longitude")
+
+
 
 
 class ServiceSerializer(serializers.ModelSerializer):
