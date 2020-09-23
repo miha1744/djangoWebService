@@ -42,7 +42,7 @@ web_urls = [
 
 
     #Calendar
-    path('event/edit/<int:event_id>', views.event, name='timetable_edit'),
+    path('event/edit/<int:event_id>', views.event, name='edit'),
     path('daily/<int:day>/<int:month>',views.DailySheldue.as_view(), name ='daily'),
     path('account/', views.accountSettings, name="account"),
 ]
