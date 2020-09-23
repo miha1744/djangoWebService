@@ -12,6 +12,7 @@ django-crispy-forms = "*"
 gunicorn = "*"
 django-heroku = "*"
 Pillow = "*"
-
+bootstrap4 = "*"
+jquery = "*"
 [requires]
 python_version = "3.6"
