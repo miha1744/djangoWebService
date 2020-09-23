@@ -72,3 +72,16 @@ class Event(models.Model):
 
 
 
+class Timetable(models.Model):
+    doctor = models.ForeignKey(Doctor, on_delete = models.CASCADE, blank=True)
+
+    day = models.DateField(u'Day of the event', help_text=u'Day of the event')
+
+    start_time = models.TimeField(u'Starting time', help_text=u'Starting time')
+
+    @property
+    def timetable_get_html_url(self):
+        url = reverse('timetable_edit', args=(self.id,))
+        return f'<a href="{url}"> {self.start_time} </a>'
+
+

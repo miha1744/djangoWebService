@@ -21,6 +21,15 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
+class TimetableSerializer(serializers.ModelSerializer):
+
+    doctor = serializers.SlugRelatedField(write_only=False, slug_field='pk', queryset = models.Doctor.objects.all())
+    class Meta:
+        model = models.Timetable
+        fields = ("doctor", "day", "start_time")
+
+
+
 
 class PatientSerializer(serializers.ModelSerializer):
     user = UserSerializer(write_only=True)
@@ -91,7 +100,15 @@ class CreateEventSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = validated_data.pop("user")
+
+
+        time = validated_data.get("start_time")
+        doctor =  validated_data.get("doctor")
+
         patient = models.Patient.objects.get(user=user) # тут находишь пациента по юзеру
+
+        models.Timetable.objects.filter(day=time, doctor_id=doctor, start_time=time.time()).delete()
+
         return models.Event.objects.create(patient = patient, **validated_data)
 
     class Meta:

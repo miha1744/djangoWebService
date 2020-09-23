@@ -4,15 +4,17 @@ import calendar
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import ListView, DeleteView
-from django.urls import reverse_lazy
-from datetime import datetime, timedelta
-from .models import Event, Patient, Doctor, Service, Coordinates
+from django.urls import reverse_lazy, reverse
+from datetime import datetime, timedelta,date
+from .models import Event, Patient, Doctor, Service, Coordinates, Timetable
 from .utils import Calendar
 from django.http import HttpResponse
 from django.views import generic
 from django.utils.safestring import mark_safe
-from .forms import EventForm
+from .forms import EventForm, TimetableForm
+from .annex import Timetable_calendar
 
+from django.http import HttpResponse, HttpResponseRedirect
 #REST
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -39,6 +41,11 @@ class GetDoctorsListAPIView(ListAPIView):
     queryset = Doctor.objects.all()
     serializer_class = serializers.DoctorSerializer
 
+
+
+class GetTimetableListAPIView(ListAPIView):
+    queryset = Timetable.objects.all()
+    serializer_class = serializers.TimetableSerializer
 
 class GetAllPatients(ListAPIView):
     queryset = Patient.objects.all()
@@ -83,6 +90,7 @@ class GetEvent(APIView):
 class CreateEventAPIView(CreateAPIView):
     model = Event
     serializer_class = serializers.CreateEventSerializer
+
 
 
 
@@ -207,3 +215,72 @@ def daily_view(day, month, id =1):
 
 
 
+
+
+
+
+
+
+#Timetable
+
+class TimetableView(generic.ListView):
+    model = Timetable
+    template_name = 'timetable.html'
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+
+
+        d = get_timetable_date(self.request.GET.get('month', None))
+        print(d.year)
+        print(d.month)
+        ucal = Timetable_calendar(d.year, d.month)
+        html_cal = ucal.formatmonth(withyear=True)
+
+        context['timetable'] = mark_safe(html_cal)
+        context['prev_month_timetable'] = prev_month_timetable(d)
+        context['next_month_timetable'] = next_month_timetable(d)
+        return context
+
+
+
+
+
+
+def get_timetable_date(req_day):
+    if req_day:
+        year, month = (int(x) for x in req_day.split('-'))
+        return date(year, month, day=1)
+    return datetime.today()
+
+
+def prev_month_timetable(d):
+    first = d.replace(day=1)
+    prev_month = first - timedelta(days=1)
+    month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
+    return month
+
+def next_month_timetable(d):
+    days_in_month = calendar.monthrange(d.year, d.month)[1]
+    last = d.replace(day=days_in_month)
+    next_month = last + timedelta(days=1)
+    month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
+    return month
+
+
+
+def timetable_event(request, event_id=None):
+    instance = Timetable()
+
+    if event_id:
+        instance = get_object_or_404(Timetable, pk=event_id)
+    else:
+        instance = Timetable()
+
+    form = TimetableForm(request.POST or None, initial={'doctor': Doctor.objects.get(user=request.user)})
+
+    if request.POST and form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('timetable'))
+    return render(request, 'timetable_event.html', {'form': form})

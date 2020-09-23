@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="clearfix">
+        <a class="btn btn-info left" href="{% url 'timetable' %}?{{ prev_month_timetable }}"> Previous Month </a>
+        <a class="btn btn-info right" href="{% url 'timetable' %}?{{ next_month_timetable }}"> Next Month </a>
+    	<a class="btn btn-info right" href="{% url 'timetable_new' %}"> New Time </a>
+    </div>
+{{ timetable }}
+{% endblock %}

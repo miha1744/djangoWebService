@@ -22,7 +22,8 @@ api_urls = [
     path("api/v1/current_user_events", views.UsersEvents.as_view(), name = "current_user_events"),
     path("api/v1/services", views.GetAllServices.as_view(), name = "services"),
     path("api/v1/patient_info",views.GetPatients.as_view(), name = "current_user"),
-    path("api/v1/coordinates",views.GetCoordinates.as_view(), name = "coordinates")
+    path("api/v1/coordinates",views.GetCoordinates.as_view(), name = "coordinates"),
+    path("api/v1/timetable",views.GetTimetableListAPIView.as_view(), name = "timetableApi")
 ]
 
 
@@ -32,7 +33,16 @@ web_urls = [
     path('accounts/register/', views.CreateDoctorView.as_view(), name="register-doctor"),
     path('calendar/', views.CalendarView.as_view(), name='calendar'),
     path('calendar/new', views.event, name='event_new'),
-    path('event/edit/<int:event_id>', views.event, name='edit'),
+
+
+    #Timetable
+    path('timetable', views.TimetableView.as_view(), name = 'timetable'),
+    path('timetable_event/edit/<int:event_id>', views.timetable_event, name = 'timetable_edit'),
+    path('timetable/new', views.timetable_event, name='timetable_new'),
+
+
+    #Calendar
+    path('event/edit/<int:event_id>', views.event, name='timetable_edit'),
     path('daily/<int:day>/<int:month>',views.DailySheldue.as_view(), name ='daily'),
     path('account/', views.accountSettings, name="account"),
 ]

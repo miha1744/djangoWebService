@@ -46,8 +46,9 @@ INSTALLED_APPS = [
 
     #CrispyForms
     'crispy_forms',
-
-    #Sheldue
+    'bootstrap_datepicker_plus',
+    'bootstrap4',
+    'jquery',
 
 
 ]
@@ -145,6 +146,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
+
+
+
 MEDIA_URL = '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 
@@ -157,3 +161,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 django_heroku.settings(locals())
+
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
